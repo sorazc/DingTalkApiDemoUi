@@ -4,6 +4,7 @@
 
 .idea
 .DS_Store
+.tea
 
 # misc
 npm-debug.log*
