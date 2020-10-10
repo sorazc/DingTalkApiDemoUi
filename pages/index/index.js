@@ -1,5 +1,15 @@
+let app = getApp();
+let domain = "http://localhost:2233";
+let url = domain + '/login';
+
+
 Page({
   data: {
+    corpId: 'ding06e43a80515722ebee0f45d8e4f7c288',
+    authCode: '',
+    userId: '',
+    userName: '',
+    hideList: true,
     grid: {
       list: [
         {
@@ -25,6 +35,50 @@ Page({
         
       },
     });
+  },
+  loginSystem() {
+    dd.showLoading();
+    dd.getAuthCode({
+      success: (res) => {
+        this.setData({
+          authCode:res.authCode
+        })
+        //dd.alert({content: "step1"});
+        dd.httpRequest({
+          url: url,
+          method: 'POST',
+          data: {
+              authCode: res.authCode
+          },
+          dataType: 'json',
+          success: (res) => {
+              // dd.alert({content: "step2"});
+              console.log('success----',res)
+              let userId = res.data.data.userId;
+              let userName = res.data.data.userName;
+              this.setData({
+                  userId:userId,
+                  userName:userName,
+                  hideList:false
+              })
+          },
+          fail: (res) => {
+              console.log("httpRequestFail---",res)
+              dd.alert({content: JSON.stringify(res)});
+          },
+          complete: (res) => {
+              dd.hideLoading();
+          }
+            
+        });
+      },
+      fail: (err)=>{
+          // dd.alert({content: "step3"});
+          dd.alert({
+              content: JSON.stringify(err)
+          })
+      }
+    })
   },
   onLoad(query) {
     // 页面加载
