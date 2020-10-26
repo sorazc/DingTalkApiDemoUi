@@ -1,6 +1,6 @@
 let app = getApp();
-let domain = "http://localhost:2233";
-let url = domain + '/login';
+let domain = "http://localhost:9899";
+let url = domain + '/api/user/getLoginUser';
 
 
 Page({
@@ -14,7 +14,8 @@ Page({
       list: [
         {
           icon: '/image/Kraken 1.jpeg',
-          text: '11111'
+          text: '文件',
+          url: '/pages/file/file'
         },
         {
           icon: '/image/shark.jpeg',
@@ -35,6 +36,9 @@ Page({
         
       },
     });
+    dd.navigateTo({
+      url: e.currentTarget.dataset.url
+    })
   },
   loginSystem() {
     dd.showLoading();
@@ -43,7 +47,7 @@ Page({
         this.setData({
           authCode:res.authCode
         })
-        //dd.alert({content: "step1"});
+        console.log(res)
         dd.httpRequest({
           url: url,
           method: 'POST',
@@ -53,7 +57,7 @@ Page({
           dataType: 'json',
           success: (res) => {
               // dd.alert({content: "step2"});
-              console.log('success----',res)
+              console.log('success----', res)
               let userId = res.data.data.userId;
               let userName = res.data.data.userName;
               this.setData({
@@ -73,10 +77,10 @@ Page({
         });
       },
       fail: (err)=>{
-          // dd.alert({content: "step3"});
-          dd.alert({
-              content: JSON.stringify(err)
-          })
+        // dd.alert({content: "step3"});
+        dd.alert({
+            content: JSON.stringify(err)
+        })
       }
     })
   },
