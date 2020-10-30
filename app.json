@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/file/file"
+    "pages/file/file",
+    "pages/user/user"
   ],
   "window": {
     "defaultTitle": "钉钉接口demo"

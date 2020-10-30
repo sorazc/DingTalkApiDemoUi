@@ -9,6 +9,8 @@ Page({
     authCode: '',
     userId: '',
     userName: '',
+    deptId: '',
+    deptName: '',
     hideList: true,
     grid: {
       list: [
@@ -19,7 +21,8 @@ Page({
         },
         {
           icon: '/image/shark.jpeg',
-          text: '222222'
+          text: '用户管理',
+          url: '/pages/user/user'
         },
         {
           icon: '/image/チューリップイラスト.jpeg',
@@ -36,6 +39,7 @@ Page({
         
       },
     });
+    console.log(e)
     dd.navigateTo({
       url: e.currentTarget.dataset.url
     })
@@ -58,12 +62,17 @@ Page({
           success: (res) => {
               // dd.alert({content: "step2"});
               console.log('success----', res)
-              let userId = res.data.data.userId;
-              let userName = res.data.data.userName;
+              let data = res.data.data;
               this.setData({
-                  userId:userId,
-                  userName:userName,
-                  hideList:false
+                  userId: data.ddUserId,
+                  userName: data.ddUsername,
+                  deptId: data.ddDeptId,
+                  deptName: data.ddDeptName,
+                  hideList: false
+              })
+              dd.setStorage({
+                key: "userInfo",
+                data: data
               })
           },
           fail: (res) => {
