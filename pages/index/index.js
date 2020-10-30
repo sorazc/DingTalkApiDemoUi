@@ -1,5 +1,5 @@
 let app = getApp();
-let domain = "http://124.70.134.206/:9899";
+let domain = "http://124.70.134.206:9899";
 let url = domain + '/api/user/getLoginUser';
 
 
